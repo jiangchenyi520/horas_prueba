@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Horas</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f4f4f4;
+    padding:15px;
+}
+
+h2{
+    text-align:center;
+}
+
+.seccion{
+    background:white;
+    padding:15px;
+    margin-bottom:15px;
+    border-radius:10px;
+}
+
+label{
+    display:block;
+    margin-top:10px;
+}
+
+input{
+    width:100%;
+    padding:8px;
+    font-size:16px;
+}
+
+.resultado{
+    font-size:18px;
+    margin-top:8px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Horas de Trabajo</h2>
+
+<div class="seccion">
+<h3>Mañana</h3>
+
+<label>Entrada</label>
+<input type="time" id="mananaInicio">
+
+<label>Salida</label>
+<input type="time" id="mananaFin">
+</div>
+
+<div class="seccion">
+<h3>Tarde</h3>
+
+<label>Entrada</label>
+<input type="time" id="tardeInicio">
+
+<label>Salida</label>
+<input type="time" id="tardeFin">
+</div>
+
+<div class="seccion">
+<h3>Resultados</h3>
+
+<div class="resultado">Horas mañana: <span id="horasManana">0</span></div>
+<div class="resultado">Horas tarde: <span id="horasTarde">0</span></div>
+<div class="resultado">Horas del día: <span id="horasTotal">0</span></div>
+</div>
+
+<script>
+
+function calcularHoras(inicio, fin){
+
+if(!inicio || !fin) return 0;
+
+let i = inicio.split(":");
+let f = fin.split(":");
+
+let inicioMin = parseInt(i[0])*60 + parseInt(i[1]);
+let finMin = parseInt(f[0])*60 + parseInt(f[1]);
+
+return (finMin - inicioMin)/60;
+}
+
+function calcular(){
+
+let mInicio = document.getElementById("mananaInicio").value;
+let mFin = document.getElementById("mananaFin").value;
+
+let tInicio = document.getElementById("tardeInicio").value;
+let tFin = document.getElementById("tardeFin").value;
+
+let horasM = calcularHoras(mInicio, mFin);
+let horasT = calcularHoras(tInicio, tFin);
+
+let total = horasM + horasT;
+
+document.getElementById("horasManana").innerText = horasM.toFixed(2);
+document.getElementById("horasTarde").innerText = horasT.toFixed(2);
+document.getElementById("horasTotal").innerText = total.toFixed(2);
+
+}
+
+document.querySelectorAll("input").forEach(input=>{
+input.addEventListener("input",calcular);
+});
+
+</script>
+
+</body>
+</html>
